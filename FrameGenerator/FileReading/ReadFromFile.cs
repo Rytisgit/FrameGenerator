@@ -29,7 +29,7 @@ namespace FrameGenerator.FileReading
             }
       
             {
-                lines = System.IO.File.ReadAllLines(@"tilefloor.txt");
+                lines = System.IO.File.ReadAllLines(@"..\..\..\Extra\tilefloor.txt");
                 string[] temp = new string[2];
                 for (var i = 0; i < lines.Length; i += 3)
                 {
@@ -64,7 +64,7 @@ namespace FrameGenerator.FileReading
                 wallpng[info.Name.Replace(".png", "")] = bitmap;
             }
 
-            string[] inputlines = System.IO.File.ReadAllLines(@"test.txt");
+            string[] inputlines = System.IO.File.ReadAllLines(@"..\..\..\Extra\test.txt");
             
             using (Bitmap bmp = new Bitmap(1280, 720))
             {
