@@ -1,4 +1,4 @@
-﻿using DemoViewer.FileReading;
+﻿using FrameGenerator.FileReading;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.IO;
 using System.Reflection;
 using System.Drawing;
 
-namespace DemoViewer
+namespace FrameGenerator
 {
     class Program
     {

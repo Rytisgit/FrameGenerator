@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
-namespace DemoViewer.FileReading
+namespace FrameGenerator.FileReading
 {
     class ReadFromFile
     {
