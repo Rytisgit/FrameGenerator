@@ -16,6 +16,7 @@ namespace FrameGenerator.FileReading
         {
             
             string[] lines = System.IO.File.ReadAllLines(@"crawl-ref\source\mon-data.h");
+            var model = InputParser.Parser.ParseData();
             for (var i = 0; i < lines.Length; i++)
             {
                 if (lines[i].Contains("  MONS_"))
