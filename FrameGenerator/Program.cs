@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Drawing;
+using FrameGenerator.FrameCreation;
 
 namespace FrameGenerator
 {
@@ -12,13 +13,16 @@ namespace FrameGenerator
     {
         static void Main(string[] args)
         {
-            Hashtable monster = new Hashtable();
-            var monsterpng = new Dictionary<string, Bitmap>();
-            var floorpng = new Dictionary<string, Bitmap>();
-            var wallpng = new Dictionary<string, Bitmap>();
-            var floorandwall = new Dictionary<string, string[]>();
-            ReadFromFile.read(monster, monsterpng, floorpng, wallpng, floorandwall); 
-            Console.WriteLine("Press any key to exit.");
+
+            var monsterdata = ReadFromFile.GetMonsterData();
+            var floorandwall = ReadFromFile.Get_Floor_And_Wall_Names_For_Dungeons();
+            var monsterpng = ReadFromFile.GetMonsterPNG();
+            var floorpng = ReadFromFile.GetFloorPNG();
+            var wallpng = ReadFromFile.GetWallPNG();
+
+
+            CreatingFrame.DrawFrame(monsterdata, monsterpng, floorpng, wallpng, floorandwall);
+            Console.WriteLine("Done");
             System.Console.ReadKey();
 
         }

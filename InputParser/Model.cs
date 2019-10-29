@@ -43,13 +43,15 @@ namespace InputParser
             new List<string> { ""},
             new List<string> { "" }
         };
-        public SideData SideData { get; set; }
+
+        public SideData SideData = new SideData();
+       
     }
-    public class SideData
+    public  class SideData
     {
         public string Name { get; set; } = "Sentinel The Covered";
         public string Race { get; set; } = "Demigod";
-        public int Health { get; set; } = -320;
+        public int Health { get; set; } = 200;
         public int MaxHealth { get; set; } = 320;
         public int Magic { get; set; } = 50;
         public int MaxMagic { get; set; } = 50;
@@ -68,5 +70,5 @@ namespace InputParser
         public string Statuses1 { get; set; } = "Slow Agi Might Haste Para";
         public string Statuses2 { get; set; } = "Tree -Tele ";
 
-    };
+    }
 }
