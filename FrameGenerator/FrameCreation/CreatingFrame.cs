@@ -49,7 +49,6 @@ namespace FrameGenerator.FrameCreation
                         int increase = 0;
 
                         g.DrawString("Wp: ", arialFont, brown, 32 * model.LineLength, 180);
-                        Console.WriteLine(model.SideData.Weapon.Length);
                         if (model.SideData.Weapon.Length>39)
 
                         {
@@ -122,44 +121,52 @@ namespace FrameGenerator.FrameCreation
                     int i = 1;
                     foreach (var tile in model.TileNames)
                         {
-                            if (tile[0] == '#')
+                             if (tile == "#blue")
+                            {
+                                g.DrawImage(wall, x, y, wall.Width, wall.Height);
+                                var blueTint = new SolidBrush(Color.FromArgb(200, 0, 0, 0));
+                                g.FillRectangle(blueTint, x, y, wall.Width, wall.Height);
+                            }
+                            else if(tile[0] == '#')
                             {
                                 g.DrawImage(wall, x, y, wall.Width, wall.Height);
                                
                             }
+                            
+                            else if (tile == ".blue")
+                            {
+                                g.DrawImage(floor, x, y, floor.Width, floor.Height);
+                                var blueTint = new SolidBrush(Color.FromArgb(200, 0, 0, 0));
+                                g.FillRectangle(blueTint, x, y, floor.Width, floor.Height);
+                            }
                             else if (tile[0] == '.')
-                            {                           
+                            {
                                 g.DrawImage(floor, x, y, floor.Width, floor.Height);
                             }
+                           
                             else if (tile == "*blue")
                             {
                                 g.DrawImage(wall, x, y, wall.Width, wall.Height);
-                                var blueTint = new SolidBrush(Color.FromArgb(10, 0, 0, 200));
+                                var blueTint = new SolidBrush(Color.FromArgb(50, 0, 0, 200));
                                 g.FillRectangle(blueTint, x, y, wall.Width, wall.Height);
-                                g.CompositingQuality = CompositingQuality.GammaCorrected;
 
 
                             }
                             else if (tile == ",blue")
                             {
                                 g.DrawImage(floor, x, y, floor.Width, floor.Height);
-                                var blueTint = new SolidBrush(Color.FromArgb(10, 0, 0, 200));
+                                var blueTint = new SolidBrush(Color.FromArgb(20, 0, 0, 200));
                                 g.FillRectangle(blueTint, x, y, floor.Width, floor.Height);
-                                g.CompositingQuality = CompositingQuality.GammaCorrected;
                             }
                             else
                             {
-
                                 if (monsterdata.ContainsKey(tile.ToUpper()))
-                                {
-                                   
+                                {                                   
                                     string nam = monsterdata[tile.ToUpper()];
-                                    Console.WriteLine(tile.ToUpper());
                                     Bitmap mnstr = monsterPNG[nam];
                                     g.DrawImage(floor, x, y, floor.Width, floor.Height);
                                     g.DrawImage(mnstr, x, y, mnstr.Width, mnstr.Height);
                                 }
-
                                 else if (tile[0] != ' ')
                                 {
                                     var Color = model.ColorList.GetType().GetField(tile.Substring(1)).GetValue(model.ColorList);
@@ -174,8 +181,6 @@ namespace FrameGenerator.FrameCreation
                             y += 32;
                         }
                         i++;
-                           
-
                         }
 
                         for (i=0; i<model.FullLengthStrings.Length; i++)
