@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Linq;
 
 namespace FrameGenerator.FrameCreation
 {
     class CreatingFrame
     {
-        public static void DrawFrame(Dictionary<string, string> monsterdata, Dictionary<string, Bitmap> monsterPNG, Dictionary<string, Bitmap> floorpng, Dictionary<string, Bitmap> wallpng, Dictionary<string, string[]> floorandwall)
+        public static void DrawFrame(Dictionary<string, string> monsterdata, Dictionary<string, Bitmap> monsterPNG, Dictionary<string, Bitmap> floorpng, Dictionary<string, Bitmap> wallpng, Dictionary<string, string[]> floorandwall, string imageSaveLocation)
         {
 
             var model = InputParser.Parser.ParseData();
@@ -14,90 +16,179 @@ namespace FrameGenerator.FrameCreation
             
 
             
-            using (Bitmap bmp = new Bitmap(1280, 720))
+            using (Bitmap bmp = new Bitmap(1602, 1050))
             {
                 using (Graphics g = Graphics.FromImage(bmp))
                 {   
                     using (Font arialFont = new Font("Courier New", 16))
                     {
+                        
                         var yellow = new SolidBrush(Color.FromArgb(252, 233, 79));
                         var brown = new SolidBrush(Color.FromArgb(143, 89, 2));
+                        var gray = new SolidBrush(Color.FromArgb(186, 189, 182));
 
-                     
 
-                        g.DrawString(model.SideData.Name, arialFont, yellow, 32 * 22, 0);
-                        g.DrawString(model.SideData.Race, arialFont, yellow, 32 * 22, 20);
-                        g.DrawString("Health: "+ model.SideData.Health.ToString()+'/'+ model.SideData.MaxHealth.ToString(), arialFont, brown, 32 * 22, 40);
-                        g.DrawString("Mana: "+ model.SideData.Magic.ToString() + '/'+ model.SideData.MaxMagic.ToString(), arialFont, brown, 32 * 22, 60);
-                        g.DrawString("AC: "+ model.SideData.ArmourClass, arialFont, brown, 32 * 22, 80);
-                        g.DrawString("EV: " + model.SideData.Evasion, arialFont, brown, 32 * 22, 100);
-                        g.DrawString("SH: "+ model.SideData.Shield, arialFont, brown, 32 * 22, 120);
-                        g.DrawString("XL: "+ model.SideData.ExperienceLevel+" Next: "+ model.SideData.NextLevel, arialFont, brown, 32 * 22, 140);
-                        g.DrawString("Noise:", arialFont, brown, 32 * 22, 160);
-                        g.DrawString("a)", arialFont, brown, 32 * 22, 180);
-                        g.DrawString("Str: "+ model.SideData.Strength, arialFont, brown, 32 * 30, 80);
-                        g.DrawString("Int: "+ model.SideData.Inteligence, arialFont, brown, 32 * 30, 100);
-                        g.DrawString("Dex: "+ model.SideData.Dexterity, arialFont, brown, 32 * 30, 120);
-                        g.DrawString("Place: "+ model.SideData.Place, arialFont, brown, 32 * 30, 140);
-                        g.DrawString("Time: "+ model.SideData.Time, arialFont, brown, 32 * 30, 160);
+                        g.DrawString(model.SideData.Name, arialFont, yellow, 32 * model.LineLength, 0);
+                        g.DrawString(model.SideData.Race, arialFont, yellow, 32 * model.LineLength, 20);
+                        g.DrawString("Health: ", arialFont, brown, 32 * model.LineLength, 40);
+                        g.DrawString(model.SideData.Health.ToString() + '/' + model.SideData.MaxHealth.ToString(), arialFont, gray, 32 * model.LineLength + g.MeasureString("Health: ", arialFont).Width, 40);
+                        g.DrawString("Mana: ", arialFont, brown, 32 * model.LineLength, 60);
+                        g.DrawString(model.SideData.Magic.ToString() + '/' + model.SideData.MaxMagic.ToString(), arialFont, gray, 32 * model.LineLength + g.MeasureString("Mana: ", arialFont).Width, 60);
+                        g.DrawString("AC: ", arialFont, brown, 32 * model.LineLength, 80);
+                        g.DrawString(model.SideData.ArmourClass, arialFont, gray, 32 * model.LineLength + g.MeasureString("AC: ", arialFont).Width, 80);
+                        g.DrawString("EV: " , arialFont, brown, 32 * model.LineLength, 100);
+                        g.DrawString(model.SideData.Evasion, arialFont, gray, 32 * model.LineLength + g.MeasureString("EV: ", arialFont).Width, 100);
+                        g.DrawString("SH: ", arialFont, brown, 32 * model.LineLength, 120);
+                        g.DrawString(model.SideData.Shield, arialFont, gray, 32 * model.LineLength + g.MeasureString("SH: ", arialFont).Width, 120);
+                        g.DrawString("XL: ", arialFont, brown, 32 * model.LineLength, 140);
+                        g.DrawString(model.SideData.ExperienceLevel, arialFont, gray, 32 * model.LineLength + g.MeasureString("XL: ", arialFont).Width, 140);
+                        g.DrawString(" Next: ", arialFont, brown, 32 * model.LineLength + g.MeasureString("XL: " + model.SideData.ExperienceLevel, arialFont).Width, 140);
+                        g.DrawString(model.SideData.NextLevel, arialFont, gray, 32 * model.LineLength + g.MeasureString("XL: " + model.SideData.ExperienceLevel + " Next: ", arialFont).Width, 140);
+                        g.DrawString("Noise:", arialFont, brown, 32 * model.LineLength, 160);
+
+                        int increase = 0;
+
+                        g.DrawString("Wp: ", arialFont, brown, 32 * model.LineLength, 180);
+                        Console.WriteLine(model.SideData.Weapon.Length);
+                        if (model.SideData.Weapon.Length>39)
+
+                        {
+                            g.DrawString(model.SideData.Weapon.Substring(4, 35), arialFont, gray, 32 * model.LineLength + g.MeasureString("Wp: ", arialFont).Width, 180);
+                            g.DrawString(model.SideData.Weapon.Substring(39), arialFont, gray, 32 * model.LineLength + g.MeasureString("Wp: ", arialFont).Width, 200);
+                            increase += 20;
+
+                        }
+                        else g.DrawString(model.SideData.Weapon.Substring(4), arialFont, gray, 32 * model.LineLength + g.MeasureString("Wp: ", arialFont).Width, 180);
+
+
+                        g.DrawString("Qv: ", arialFont, brown, 32 * model.LineLength, 200+increase);
+
+                        if (model.SideData.Quiver.Length > 39)
+
+                        {
+                            g.DrawString(model.SideData.Quiver.Substring(4, 35), arialFont, gray, 32 * model.LineLength + g.MeasureString("Qv: ", arialFont).Width, 200+increase);
+                            g.DrawString(model.SideData.Quiver.Substring(39), arialFont, gray, 32 * model.LineLength + g.MeasureString("Qv: ", arialFont).Width, 220+increase);
+                            increase += 20;
+
+                        }
+                        else g.DrawString(model.SideData.Quiver.Substring(4), arialFont, gray, 32 * model.LineLength + g.MeasureString("Qv: ", arialFont).Width, 200+increase);
+
+                        g.DrawString(model.SideData.Statuses1, arialFont, gray, 32 * model.LineLength, 220+increase);
+                        g.DrawString(model.SideData.Statuses2, arialFont, gray, 32 * model.LineLength, 240+increase);                      
+                        g.DrawString("Str: ", arialFont, brown, 32 * (model.LineLength + 8), 80);
+                        g.DrawString(model.SideData.Strength, arialFont, gray, 32 * (model.LineLength + 8) + g.MeasureString("Str: ", arialFont).Width, 80);
+                        g.DrawString("Int: ", arialFont, brown, 32 * (model.LineLength + 8), 100);
+                        g.DrawString(model.SideData.Inteligence, arialFont, gray, 32 * (model.LineLength + 8) + g.MeasureString("Int: ", arialFont).Width, 100);
+                        g.DrawString("Dex: ", arialFont, brown, 32 * (model.LineLength + 8), 120);
+                        g.DrawString(model.SideData.Dexterity, arialFont, gray, 32 * (model.LineLength + 8) + g.MeasureString("Dex: ", arialFont).Width, 120);
+                        g.DrawString("Place: ", arialFont, brown, 32 * (model.LineLength + 8), 140);
+                        g.DrawString(model.SideData.Place, arialFont, gray, 32 * (model.LineLength + 8) + g.MeasureString("Place: ", arialFont).Width, 140);
+                        g.DrawString("Time: ", arialFont, brown, 32 * (model.LineLength + 8), 160);
+                        g.DrawString(model.SideData.Time, arialFont, gray, 32 * (model.LineLength + 8) + g.MeasureString("Time: ", arialFont).Width, 160);
 
 
                         Bitmap bar = new Bitmap(250, 16);
                         Graphics temp = Graphics.FromImage(bar);
                         temp.Clear(Color.Gray);
-                        g.DrawImage(bar, 32 * 30, 40);
-                        g.DrawImage(bar, 32 * 30, 60);
+                        g.DrawImage(bar, 32 * (model.LineLength + 8), 40);
+                        g.DrawImage(bar, 32 * (model.LineLength + 8), 60);
+                        int percentage;
+                        if (model.SideData.Health > 0)
+                        {
+                            percentage = (int)(250 * ((float)model.SideData.Health / model.SideData.MaxHealth));
+                            Bitmap heathbar = new Bitmap(percentage, 16);
+                            temp = Graphics.FromImage(heathbar);
+                            temp.Clear(Color.Green);
+                            g.DrawImage(heathbar, 32 * (model.LineLength + 8), 40);
 
-                        int percentage = (int)(250 * ((float)model.SideData.Health / model.SideData.MaxHealth));
-                        Bitmap heathbar = new Bitmap(percentage, 16);
+                        }
+
                         percentage = (int)(250 * ((float)model.SideData.Magic / model.SideData.MaxMagic));
-                        Bitmap mana = new Bitmap(percentage, 16);
-                        temp = Graphics.FromImage(heathbar);
-                        temp.Clear(Color.Green);
+                        Bitmap mana = new Bitmap(percentage, 16);   
                         temp = Graphics.FromImage(mana);
-                        temp.Clear(Color.Blue);
-                        g.DrawImage(heathbar, 32 * 30, 40);
-                        g.DrawImage(mana, 32 * 30, 60);
-                    }
+                        temp.Clear(Color.Blue);         
+                        g.DrawImage(mana, 32 * (model.LineLength + 8), 60);
                     
-                    var x = 0;
-                    var y = 0;
-                    string[] inputlines = System.IO.File.ReadAllLines(@"..\..\..\Extra\test.txt");
+                    
+                    int x = 0;
+                    int y = 0;
                     string[] tempo = model.SideData.Place.Split(':');
                     string name = floorandwall[tempo[0].ToUpper()][0];
-                    Console.WriteLine();
+                 
+
                     Bitmap wall = wallpng[name];
                     name = floorandwall[tempo[0].ToUpper()][1];
                     Bitmap floor = floorpng[name];
-
-                    foreach (var line in inputlines)
-                    {
-                        string[] words = line.Split(' ');
-                        for (var i = 0; i < words.Length; i += 2)
+                    int i = 1;
+                    foreach (var tile in model.TileNames)
                         {
-                            if (words[i] == "#")
-                            {                   
+                            if (tile[0] == '#')
+                            {
                                 g.DrawImage(wall, x, y, wall.Width, wall.Height);
+                               
                             }
-                            else if (words[i] == ".")
+                            else if (tile[0] == '.')
                             {                           
                                 g.DrawImage(floor, x, y, floor.Width, floor.Height);
                             }
+                            else if (tile == "*blue")
+                            {
+                                g.DrawImage(wall, x, y, wall.Width, wall.Height);
+                                var blueTint = new SolidBrush(Color.FromArgb(10, 0, 0, 200));
+                                g.FillRectangle(blueTint, x, y, wall.Width, wall.Height);
+                                g.CompositingQuality = CompositingQuality.GammaCorrected;
+
+
+                            }
+                            else if (tile == ",blue")
+                            {
+                                g.DrawImage(floor, x, y, floor.Width, floor.Height);
+                                var blueTint = new SolidBrush(Color.FromArgb(10, 0, 0, 200));
+                                g.FillRectangle(blueTint, x, y, floor.Width, floor.Height);
+                                g.CompositingQuality = CompositingQuality.GammaCorrected;
+                            }
                             else
                             {
-                                
-                                string nam = monsterdata[(String)(words[i] + words[i + 1]).Replace(" ", "")];
-                                Bitmap mnstr = monsterPNG[nam];
-                                g.DrawImage(floor, x, y, floor.Width, floor.Height);
-                                g.DrawImage(mnstr, x, y, mnstr.Width, mnstr.Height);
-                            }
-                            x += 32;
+
+                                if (monsterdata.ContainsKey(tile.ToUpper()))
+                                {
+                                   
+                                    string nam = monsterdata[tile.ToUpper()];
+                                    Console.WriteLine(tile.ToUpper());
+                                    Bitmap mnstr = monsterPNG[nam];
+                                    g.DrawImage(floor, x, y, floor.Width, floor.Height);
+                                    g.DrawImage(mnstr, x, y, mnstr.Width, mnstr.Height);
+                                }
+
+                                else if (tile[0] != ' ')
+                                {
+                                    var Color = model.ColorList.GetType().GetField(tile.Substring(1)).GetValue(model.ColorList);
+                                    g.DrawString(tile[0]+"?", arialFont, (SolidBrush)Color, x, y);
+                                }
+                              }
+                        x += 32;
+                        if(i==model.LineLength )
+                        {
+                            i = 0;
+                            x = 0;
+                            y += 32;
                         }
-                        x = 0;
-                        y += 32;
+                        i++;
+                           
+
+                        }
+
+                        for (i=0; i<model.FullLengthStrings.Length; i++)
+                        {                          
+                            var Color = model.ColorList.GetType().GetField(model.FullLengthStringColors[i]).GetValue(model.ColorList);
+                            g.DrawString(model.FullLengthStrings[i], arialFont, (SolidBrush)Color, 0, y);
+                            y += 32;
+                        }
+
                     }
                 }
-                bmp.Save(@"C:\Users\Aspectus\Desktop\img.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
+                
+                bmp.Save(imageSaveLocation + "img.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
             }
         }
 

@@ -11,17 +11,21 @@ namespace FrameGenerator
 {
     class Program
     {
+      
         static void Main(string[] args)
         {
 
-            var monsterdata = ReadFromFile.GetMonsterData();
+            string GameLocation = @"crawl-ref\";
+            string ImageSaveLocation = @"C:\Users\Aspectus\Desktop\";
+
+            var monsterdata = ReadFromFile.GetMonsterData(GameLocation);
             var floorandwall = ReadFromFile.Get_Floor_And_Wall_Names_For_Dungeons();
-            var monsterpng = ReadFromFile.GetMonsterPNG();
-            var floorpng = ReadFromFile.GetFloorPNG();
-            var wallpng = ReadFromFile.GetWallPNG();
+            var monsterpng = ReadFromFile.GetMonsterPNG(GameLocation);
+            var floorpng = ReadFromFile.GetFloorPNG(GameLocation);
+            var wallpng = ReadFromFile.GetWallPNG(GameLocation);
 
 
-            CreatingFrame.DrawFrame(monsterdata, monsterpng, floorpng, wallpng, floorandwall);
+            CreatingFrame.DrawFrame(monsterdata, monsterpng, floorpng, wallpng, floorandwall,ImageSaveLocation);
             Console.WriteLine("Done");
             System.Console.ReadKey();
 
