@@ -121,7 +121,7 @@ namespace FrameGenerator.FrameCreation
                     int i = 1;
                     foreach (var tile in model.TileNames)
                         {
-                             if (tile == "#blue")
+                             if (tile == "#BLUE")
                             {
                                 g.DrawImage(wall, x, y, wall.Width, wall.Height);
                                 var blueTint = new SolidBrush(Color.FromArgb(200, 0, 0, 0));
@@ -133,7 +133,7 @@ namespace FrameGenerator.FrameCreation
                                
                             }
                             
-                            else if (tile == ".blue")
+                            else if (tile == ".BLUE")
                             {
                                 g.DrawImage(floor, x, y, floor.Width, floor.Height);
                                 var blueTint = new SolidBrush(Color.FromArgb(200, 0, 0, 0));
@@ -144,7 +144,7 @@ namespace FrameGenerator.FrameCreation
                                 g.DrawImage(floor, x, y, floor.Width, floor.Height);
                             }
                            
-                            else if (tile == "*blue")
+                            else if (tile == "*BLUE")
                             {
                                 g.DrawImage(wall, x, y, wall.Width, wall.Height);
                                 var blueTint = new SolidBrush(Color.FromArgb(50, 0, 0, 200));
@@ -152,7 +152,7 @@ namespace FrameGenerator.FrameCreation
 
 
                             }
-                            else if (tile == ",blue")
+                            else if (tile == ",BLUE")
                             {
                                 g.DrawImage(floor, x, y, floor.Width, floor.Height);
                                 var blueTint = new SolidBrush(Color.FromArgb(20, 0, 0, 200));
@@ -160,15 +160,19 @@ namespace FrameGenerator.FrameCreation
                             }
                             else
                             {
-                                if (monsterdata.ContainsKey(tile.ToUpper()))
+                                if (monsterdata.ContainsKey(tile))
                                 {                                   
-                                    string nam = monsterdata[tile.ToUpper()];
-                                    Bitmap mnstr = monsterPNG[nam];
-                                    g.DrawImage(floor, x, y, floor.Width, floor.Height);
-                                    g.DrawImage(mnstr, x, y, mnstr.Width, mnstr.Height);
+                                    string nam = monsterdata[tile];
+
+                                    if (monsterPNG.TryGetValue(nam, out Bitmap mnstr))
+                                    {
+                                        g.DrawImage(floor, x, y, floor.Width, floor.Height);
+                                        g.DrawImage(mnstr, x, y, mnstr.Width, mnstr.Height);
+                                    }
                                 }
                                 else if (tile[0] != ' ')
                                 {
+                                    Console.WriteLine(tile);
                                     var Color = model.ColorList.GetType().GetField(tile.Substring(1)).GetValue(model.ColorList);
                                     g.DrawString(tile[0]+"?", arialFont, (SolidBrush)Color, x, y);
                                 }
@@ -196,7 +200,6 @@ namespace FrameGenerator.FrameCreation
                 bmp.Save(imageSaveLocation + "img.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
             }
         }
-
 
     }
 }
