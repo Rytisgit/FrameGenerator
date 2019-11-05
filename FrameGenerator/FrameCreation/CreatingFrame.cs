@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Linq;
+using System.Text;
 
 namespace FrameGenerator.FrameCreation
 {
+    
     class CreatingFrame
     {
         public static void DrawFrame(Dictionary<string, string> monsterdata, Dictionary<string, Bitmap> monsterPNG, Dictionary<string, Bitmap> floorpng, Dictionary<string, Bitmap> wallpng, Dictionary<string, string[]> floorandwall, string imageSaveLocation)
         {
 
             var model = InputParser.Parser.ParseData();
-
-            
-
-            
+                      
             using (Bitmap bmp = new Bitmap(1602, 1050))
             {
                 using (Graphics g = Graphics.FromImage(bmp))
@@ -50,7 +50,6 @@ namespace FrameGenerator.FrameCreation
 
                         g.DrawString("Wp: ", arialFont, brown, 32 * model.LineLength, 180);
                         if (model.SideData.Weapon.Length>39)
-
                         {
                             g.DrawString(model.SideData.Weapon.Substring(4, 35), arialFont, gray, 32 * model.LineLength + g.MeasureString("Wp: ", arialFont).Width, 180);
                             g.DrawString(model.SideData.Weapon.Substring(39), arialFont, gray, 32 * model.LineLength + g.MeasureString("Wp: ", arialFont).Width, 200);
@@ -58,7 +57,6 @@ namespace FrameGenerator.FrameCreation
 
                         }
                         else g.DrawString(model.SideData.Weapon.Substring(4), arialFont, gray, 32 * model.LineLength + g.MeasureString("Wp: ", arialFont).Width, 180);
-
 
                         g.DrawString("Qv: ", arialFont, brown, 32 * model.LineLength, 200+increase);
 
@@ -68,7 +66,6 @@ namespace FrameGenerator.FrameCreation
                             g.DrawString(model.SideData.Quiver.Substring(4, 35), arialFont, gray, 32 * model.LineLength + g.MeasureString("Qv: ", arialFont).Width, 200+increase);
                             g.DrawString(model.SideData.Quiver.Substring(39), arialFont, gray, 32 * model.LineLength + g.MeasureString("Qv: ", arialFont).Width, 220+increase);
                             increase += 20;
-
                         }
                         else g.DrawString(model.SideData.Quiver.Substring(4), arialFont, gray, 32 * model.LineLength + g.MeasureString("Qv: ", arialFont).Width, 200+increase);
 
@@ -172,7 +169,6 @@ namespace FrameGenerator.FrameCreation
                                 }
                                 else if (tile[0] != ' ')
                                 {
-                                    Console.WriteLine(tile);
                                     var Color = model.ColorList.GetType().GetField(tile.Substring(1)).GetValue(model.ColorList);
                                     g.DrawString(tile[0]+"?", arialFont, (SolidBrush)Color, x, y);
                                 }
@@ -196,10 +192,25 @@ namespace FrameGenerator.FrameCreation
 
                     }
                 }
-                
-                bmp.Save(imageSaveLocation + "img.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
+                ImageCodecInfo jpgEncoder = GetEncoder(ImageFormat.Gif);
+                System.Drawing.Imaging.Encoder myEncoder =  System.Drawing.Imaging.Encoder.Quality;
+                EncoderParameters myEncoderParameters = new EncoderParameters(1);
+                EncoderParameter myEncoderParameter = new EncoderParameter(myEncoder, 100L);
+                myEncoderParameters.Param[0] = myEncoderParameter;                
+                bmp.Save(imageSaveLocation + "img.jpg", jpgEncoder, myEncoderParameters);
             }
         }
-
+        private static ImageCodecInfo GetEncoder(ImageFormat format)
+        {
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
+            foreach (ImageCodecInfo codec in codecs)
+            {
+                if (codec.FormatID == format.Guid)
+                {
+                    return codec;
+                }
+            }
+            return null;
+        }
     }
 }
