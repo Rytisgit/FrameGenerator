@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrameGenerator", "FrameGene
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InputParser", "InputParser\InputParser.csproj", "{F693FC79-6D53-4A8B-A91F-AE57E6ECF842}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "imageGenerate", "imageGenerate\imageGenerate.csproj", "{67DF9345-849A-4999-A1CE-419260B5014B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageDisplay", "ImageDisplay\ImageDisplay.csproj", "{391E4969-E9B1-4FBE-BE9F-7374A64E2060}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{F693FC79-6D53-4A8B-A91F-AE57E6ECF842}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F693FC79-6D53-4A8B-A91F-AE57E6ECF842}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F693FC79-6D53-4A8B-A91F-AE57E6ECF842}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67DF9345-849A-4999-A1CE-419260B5014B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67DF9345-849A-4999-A1CE-419260B5014B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67DF9345-849A-4999-A1CE-419260B5014B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67DF9345-849A-4999-A1CE-419260B5014B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{391E4969-E9B1-4FBE-BE9F-7374A64E2060}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{391E4969-E9B1-4FBE-BE9F-7374A64E2060}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{391E4969-E9B1-4FBE-BE9F-7374A64E2060}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{391E4969-E9B1-4FBE-BE9F-7374A64E2060}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
