@@ -11,15 +11,16 @@ namespace FrameGenerator.FrameCreation
     
     class CreatingFrame
     {
-        public static void DrawFrame(Dictionary<string, string> monsterdata, Dictionary<string, Bitmap> monsterPNG, Dictionary<string, Bitmap> floorpng, Dictionary<string, Bitmap> wallpng, Dictionary<string, string[]> floorandwall, string imageSaveLocation)
+        public static void DrawFrame(Dictionary<string, string> monsterdata, Dictionary<string, Bitmap> monsterPNG, Dictionary<string, Bitmap> floorpng, Dictionary<string, Bitmap> wallpng, Dictionary<string, string[]> floorandwall, Window.Widow_Display display)
         {
 
             var model = InputParser.Parser.ParseData();
-                      
-            using (Bitmap bmp = new Bitmap(1602, 1050))
-            {
+
+            Bitmap bmp = new Bitmap(1602, 1050);
+            
                 using (Graphics g = Graphics.FromImage(bmp))
-                {   
+                {
+                     g.Clear(Color.Black);
                     using (Font arialFont = new Font("Courier New", 16))
                     {
                         
@@ -192,25 +193,10 @@ namespace FrameGenerator.FrameCreation
 
                     }
                 }
-                ImageCodecInfo jpgEncoder = GetEncoder(ImageFormat.Gif);
-                System.Drawing.Imaging.Encoder myEncoder =  System.Drawing.Imaging.Encoder.Quality;
-                EncoderParameters myEncoderParameters = new EncoderParameters(1);
-                EncoderParameter myEncoderParameter = new EncoderParameter(myEncoder, 100L);
-                myEncoderParameters.Param[0] = myEncoderParameter;                
-                bmp.Save(imageSaveLocation + "img.jpg", jpgEncoder, myEncoderParameters);
-            }
+
+                display.Update_Window_Image(bmp);
+          
         }
-        private static ImageCodecInfo GetEncoder(ImageFormat format)
-        {
-            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
-            foreach (ImageCodecInfo codec in codecs)
-            {
-                if (codec.FormatID == format.Guid)
-                {
-                    return codec;
-                }
-            }
-            return null;
-        }
+  
     }
 }

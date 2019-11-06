@@ -2,15 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
+    <ApplicationIcon />
+    <OutputType>WinExe</OutputType>
+    <StartupObject />
+    <AssemblyName>Player</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Drawing.Common" Version="4.6.0" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\FrameGenerator\FrameGenerator.csproj" />
     <ProjectReference Include="..\ImageDisplay\Window.csproj" />
-    <ProjectReference Include="..\InputParser\InputParser.csproj" />
     <ProjectReference Include="..\Window\Window.csproj" />
   </ItemGroup>
 

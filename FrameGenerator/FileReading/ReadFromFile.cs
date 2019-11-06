@@ -16,7 +16,7 @@ namespace FrameGenerator.FileReading
             {
             var monster = new Dictionary<string, string>();
 
-            string[] lines = System.IO.File.ReadAllLines(gameLocation + @"source\mon-data.h");
+            string[] lines = System.IO.File.ReadAllLines(gameLocation + @"\source\mon-data.h");
        
             for (var i = 0; i<lines.Length; i++)
             {
@@ -54,7 +54,7 @@ namespace FrameGenerator.FileReading
         {
 
             var monsterPNG = new Dictionary<string, Bitmap>();
-            string[] allpngfiles = Directory.GetFiles(gameLocation + @"source\rltiles\mon", "*.png*", SearchOption.AllDirectories);
+            string[] allpngfiles = Directory.GetFiles(gameLocation + @"\source\rltiles\mon", "*.png*", SearchOption.AllDirectories);
             foreach (var file in allpngfiles)
             {
                 FileInfo info = new FileInfo(file);
@@ -70,7 +70,7 @@ namespace FrameGenerator.FileReading
         {
 
             var floorpng = new Dictionary<string, Bitmap>();
-            string[] floorpngfiles = Directory.GetFiles(gameLocation + @"source\rltiles\dngn\floor", "*.png*", SearchOption.AllDirectories);
+            string[] floorpngfiles = Directory.GetFiles(gameLocation + @"\source\rltiles\dngn\floor", "*.png*", SearchOption.AllDirectories);
             foreach (var file in floorpngfiles)
             {
                 FileInfo info = new FileInfo(file);
@@ -85,7 +85,7 @@ namespace FrameGenerator.FileReading
         {
 
             var wallpng = new Dictionary<string, Bitmap>();
-            string[] wallpngfiles = Directory.GetFiles(gameLocation + @"source\rltiles\dngn\wall", "*.png*", SearchOption.AllDirectories);
+            string[] wallpngfiles = Directory.GetFiles(gameLocation + @"\source\rltiles\dngn\wall", "*.png*", SearchOption.AllDirectories);
             foreach (var file in wallpngfiles)
             {
                 FileInfo info = new FileInfo(file);
