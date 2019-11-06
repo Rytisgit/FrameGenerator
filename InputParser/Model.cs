@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 
+
 namespace InputParser
 {
     public enum LayoutType

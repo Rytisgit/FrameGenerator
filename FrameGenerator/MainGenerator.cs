@@ -22,9 +22,8 @@ namespace FrameGenerator
 
         public MainGenerator()
         {
-            string GameLocation = File.ReadLines(@"..\..\..\..\FrameGenerator\Extra\config.ini").First();
-
-       
+            string GameLocation = File.ReadAllLines(@"..\..\..\..\FrameGenerator\Extra\config.ini").First();
+            
             _monsterdata = ReadFromFile.GetMonsterData(GameLocation);
             _floorandwall = ReadFromFile.Get_Floor_And_Wall_Names_For_Dungeons();
             _monsterpng = ReadFromFile.GetMonsterPNG(GameLocation);
@@ -36,7 +35,7 @@ namespace FrameGenerator
         {
             CreatingFrame.DrawFrame(_monsterdata, _monsterpng, _floorpng, wallpng, _floorandwall, display);
             Console.WriteLine("Done");
-            return Task.CompletedTask;
+            return default;
         }
 
   
