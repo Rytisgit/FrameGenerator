@@ -16,7 +16,7 @@ namespace Window
         {
            
             Application.EnableVisualStyles();           
-            Application.SetCompatibleTextRenderingDefault(false);
+            //Application.SetCompatibleTextRenderingDefault(false);
             form = new Form1();
             if (!File.Exists(@"..\..\..\..\FrameGenerator\Extra\config.ini"))
             {
