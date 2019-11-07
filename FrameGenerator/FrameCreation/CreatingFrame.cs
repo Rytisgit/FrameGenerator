@@ -1,4 +1,6 @@
-﻿using System;
+﻿using InputParse;
+using Putty;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -11,10 +13,10 @@ namespace FrameGenerator.FrameCreation
     
     class CreatingFrame
     {
-        public static void DrawFrame(Dictionary<string, string> monsterdata, Dictionary<string, Bitmap> monsterPNG, Dictionary<string, Bitmap> floorpng, Dictionary<string, Bitmap> wallpng, Dictionary<string, string[]> floorandwall, Window.Widow_Display display)
+        public static void DrawFrame(Dictionary<string, string> monsterdata, Dictionary<string, Bitmap> monsterPNG, Dictionary<string, Bitmap> floorpng, Dictionary<string, Bitmap> wallpng, Dictionary<string, string[]> floorandwall, Window.Widow_Display display, TerminalCharacter[,] chars)
         {
 
-            var model = InputParser.Parser.ParseData();
+            var model = Parser.ParseData(chars);
 
             Bitmap bmp = new Bitmap(1602, 1050);
             
@@ -49,26 +51,26 @@ namespace FrameGenerator.FrameCreation
 
                         int increase = 0;
 
-                        g.DrawString("Wp: ", arialFont, brown, 32 * model.LineLength, 180);
-                        if (model.SideData.Weapon.Length>39)
-                        {
-                            g.DrawString(model.SideData.Weapon.Substring(4, 35), arialFont, gray, 32 * model.LineLength + g.MeasureString("Wp: ", arialFont).Width, 180);
-                            g.DrawString(model.SideData.Weapon.Substring(39), arialFont, gray, 32 * model.LineLength + g.MeasureString("Wp: ", arialFont).Width, 200);
-                            increase += 20;
+                    g.DrawString("Wp: ", arialFont, brown, 32 * model.LineLength, 180);
+                    if (model.SideData.Weapon.Length > 39)
+                    {
+                        g.DrawString(model.SideData.Weapon.Substring(0, 35), arialFont, gray, 32 * model.LineLength + g.MeasureString("Wp: ", arialFont).Width, 180);
+                        g.DrawString(model.SideData.Weapon.Substring(35), arialFont, gray, 32 * model.LineLength + g.MeasureString("Wp: ", arialFont).Width, 200);
+                        increase += 20;
 
-                        }
-                        else g.DrawString(model.SideData.Weapon.Substring(4), arialFont, gray, 32 * model.LineLength + g.MeasureString("Wp: ", arialFont).Width, 180);
+                    }
+                    else g.DrawString(model.SideData.Weapon, arialFont, gray, 32 * model.LineLength + g.MeasureString("Wp: ", arialFont).Width, 180);
 
-                        g.DrawString("Qv: ", arialFont, brown, 32 * model.LineLength, 200+increase);
+                    g.DrawString("Qv: ", arialFont, brown, 32 * model.LineLength, 200+increase);
 
                         if (model.SideData.Quiver.Length > 39)
 
                         {
-                            g.DrawString(model.SideData.Quiver.Substring(4, 35), arialFont, gray, 32 * model.LineLength + g.MeasureString("Qv: ", arialFont).Width, 200+increase);
-                            g.DrawString(model.SideData.Quiver.Substring(39), arialFont, gray, 32 * model.LineLength + g.MeasureString("Qv: ", arialFont).Width, 220+increase);
+                            g.DrawString(model.SideData.Quiver.Substring(0, 35), arialFont, gray, 32 * model.LineLength + g.MeasureString("Qv: ", arialFont).Width, 200+increase);
+                            g.DrawString(model.SideData.Quiver.Substring(35), arialFont, gray, 32 * model.LineLength + g.MeasureString("Qv: ", arialFont).Width, 220+increase);
                             increase += 20;
                         }
-                        else g.DrawString(model.SideData.Quiver.Substring(4), arialFont, gray, 32 * model.LineLength + g.MeasureString("Qv: ", arialFont).Width, 200+increase);
+                        else g.DrawString(model.SideData.Quiver, arialFont, gray, 32 * model.LineLength + g.MeasureString("Qv: ", arialFont).Width, 200+increase);
 
                         g.DrawString(model.SideData.Statuses1, arialFont, gray, 32 * model.LineLength, 220+increase);
                         g.DrawString(model.SideData.Statuses2, arialFont, gray, 32 * model.LineLength, 240+increase);                      
@@ -99,13 +101,14 @@ namespace FrameGenerator.FrameCreation
                             g.DrawImage(heathbar, 32 * (model.LineLength + 8), 40);
 
                         }
-
+                    if (model.SideData.Magic > 0)
+                    {
                         percentage = (int)(250 * ((float)model.SideData.Magic / model.SideData.MaxMagic));
-                        Bitmap mana = new Bitmap(percentage, 16);   
+                        Bitmap mana = new Bitmap(percentage, 16);
                         temp = Graphics.FromImage(mana);
-                        temp.Clear(Color.Blue);         
+                        temp.Clear(Color.Blue);
                         g.DrawImage(mana, 32 * (model.LineLength + 8), 60);
-                    
+                    }
                     
                     int x = 0;
                     int y = 0;
@@ -185,7 +188,6 @@ namespace FrameGenerator.FrameCreation
                         }
 
                         for (i=0; i<model.FullLengthStrings.Length; i++)
-                        {                          
                             var Color = model.ColorList.GetType().GetField(model.FullLengthStringColors[i]).GetValue(model.ColorList);
                             g.DrawString(model.FullLengthStrings[i], arialFont, (SolidBrush)Color, 0, y);
                             y += 32;
