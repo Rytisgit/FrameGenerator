@@ -8,6 +8,7 @@ using FrameGenerator.FrameCreation;
 using System.Threading.Tasks;
 using Window;
 using System.Linq;
+using Putty;
 
 namespace FrameGenerator
 {
@@ -31,11 +32,11 @@ namespace FrameGenerator
             wallpng = ReadFromFile.GetWallPNG(GameLocation);
         }
 
-        public Task GenerateImage()
+        public void GenerateImage(TerminalCharacter[,] chars)
         {
-            CreatingFrame.DrawFrame(_monsterdata, _monsterpng, _floorpng, wallpng, _floorandwall, display);
-            Console.WriteLine("Done");
-            return default;
+            if(chars != null) { CreatingFrame.DrawFrame(_monsterdata, _monsterpng, _floorpng, wallpng, _floorandwall, display, chars); }
+            //Console.WriteLine("Done");
+            return;
         }
 
   
