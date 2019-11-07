@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ImageDisplay\Window.csproj" />
     <ProjectReference Include="..\InputParser\InputParser.csproj" />
     <ProjectReference Include="..\Window\Window.csproj" />
   </ItemGroup>
